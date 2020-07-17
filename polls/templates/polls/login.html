@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/polls/login_post/">
+        <!-- Post방식인 경우 Token 필요 -->
+        {% csrf_token %}
+        <input type="text" name="user_id">
+        <input type="password" name="user_pw">
+        <input type="submit">
+    </form>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $('[name=user_id]').blur(() => {
+            $.ajax(
+            {
+                type: 'POST',
+                url: '/polls/login_post/',
+                data : $("form").serialize(),
+                //serialize name을 일자로 다 리턴시켜줌
+                // {
+                //     'user_id' : $('[name=user_id').val(),
+                //     'user_pw' : $('[name=user_pw').val(),
+                //     'csrfmiddlewaretoken' : $('[name=user_pw').val(),
+                // },
+
+                success : function(result)
+                {
+                    console.log(result)
+                },
+            });
+            return false;
+        })
+    </script>
+</body>
+</html>

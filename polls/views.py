@@ -6,6 +6,22 @@ from django.urls import reverse
 from .models import *
 # Create your views here.
 
+def logout(request):
+    request.session['userid'] = None
+    request.session.clear()
+    return HttpResponse('11')
+
+def login(request):
+    return render(request, 'polls/login.html')
+
+def login_post(request):
+    user_id = request.GET.get('user_id')
+    user_pw = request.GET.get('user_pw')
+    #print(user_id, user_pw)
+    request.session['user_id'] = user_id  
+    return HttpResponse(user_id+"님, 반갑습니다.")
+
+
 def index(request):    
     latest_question_list = Question.objects.order_by('pub_date')[:5]    
     # output = ', '.join([q.question_text for q in latest_question_list])    
